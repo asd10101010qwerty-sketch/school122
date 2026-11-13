@@ -1,0 +1,11 @@
+{
+  "name": "school122-bot",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=20" },
+  "dependencies": {
+    "@upstash/redis": "^1.35.0",
+    "@vercel/functions": "^2.2.0",
+    "grammy": "^1.36.0"
+  }
+}
