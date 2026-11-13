@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="uz" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>122-maktab — Yunusobod tumani</title>
+  <meta name="description" content="122-sonli umumiy o‘rta ta’lim maktabi, Yunusobod tumani, Toshkent">
+  <link rel="icon" href="img/logo.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script>
+    (function () {
+      var t = localStorage.getItem('theme');
+      if (!t) t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+</head>
+<body>
+  <!-- SVG icon sprite -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+    <symbol id="i-telegram" viewBox="0 0 24 24"><path d="M21.5 4.3L2.9 11.5c-1 .4-1 1.6 0 1.9l4.6 1.5 1.8 5.6c.2.7 1.1.9 1.6.4l2.6-2.4 4.8 3.5c.6.4 1.4.1 1.6-.6l3-15.8c.2-.9-.6-1.6-1.4-1.3zM9.6 14.3l-.4 3.6-1.3-4.2 9.5-6.2-7.8 6.8z" fill="currentColor"/></symbol>
+    <symbol id="i-instagram" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 22s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><circle cx="12" cy="10" r="2.5" fill="none" stroke="currentColor" stroke-width="2"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-book" viewBox="0 0 24 24"><path d="M2 5c3-1.5 7-1.5 10 1 3-2.5 7-2.5 10-1v14c-3-1.5-7-1.5-10 1-3-2.5-7-2.5-10-1z M12 6v14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></symbol>
+    <symbol id="i-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="5" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="1.5" fill="currentColor"/></symbol>
+    <symbol id="i-rocket" viewBox="0 0 24 24"><path d="M5 15c-1.5 1.5-2 5-2 5s3.5-.5 5-2M9 15l-3-3c1-4 4.5-9 13-9 0 8.5-5 12-9 13z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><circle cx="15" cy="9" r="1.8" fill="none" stroke="currentColor" stroke-width="1.8"/></symbol>
+    <symbol id="i-compass" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M15.5 8.5l-2 5-5 2 2-5z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></symbol>
+    <symbol id="i-star" viewBox="0 0 24 24"><path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></symbol>
+    <symbol id="i-bulb" viewBox="0 0 24 24"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2V16h5v-.1c0-.8.4-1.5 1-2A6 6 0 0 0 12 3z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></symbol>
+    <symbol id="i-puzzle" viewBox="0 0 24 24"><path d="M4 8h4a2 2 0 1 1 4 0h4v4a2 2 0 1 1 0 4v4h-4a2 2 0 1 0-4 0H4v-4a2 2 0 1 0 0-4z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></symbol>
+    <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M2.5 20c.5-3.5 3.2-5.5 6.5-5.5s6 2 6.5 5.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M16 4.6a3.5 3.5 0 0 1 0 6.8M18 14.8c2 .7 3.2 2.5 3.5 5.2" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+    <symbol id="i-chat" viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></symbol>
+    <symbol id="i-heart" viewBox="0 0 24 24"><path d="M12 20s-8-4.8-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 9c0 6.2-8 11-8 11z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></symbol>
+    <symbol id="i-award" viewBox="0 0 24 24"><circle cx="12" cy="9" r="6" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M8.5 14l-1.5 7 5-3 5 3-1.5-7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></symbol>
+    <symbol id="i-flag" viewBox="0 0 24 24"><path d="M5 21V4M5 4h12l-2 4 2 4H5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/></symbol>
+    <symbol id="i-cap" viewBox="0 0 24 24"><path d="M2 9l10-5 10 5-10 5z M6 11v5c3 2.5 9 2.5 12 0v-5 M22 9v6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/></symbol>
+    <symbol id="i-calendar" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M3 10h18M8 3v4M16 3v4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+  </svg>
+
+  <header class="header" id="top">
+    <div class="container header__inner">
+      <a href="#top" class="brand">
+        <img src="img/logo.jpg" alt="122-maktab logo" class="brand__logo">
+        <span class="brand__text">
+          <strong>122-maktab</strong>
+          <small data-i18n="brand.sub">Yunusobod tumani</small>
+        </span>
+      </a>
+
+      <nav class="nav" id="nav">
+        <a href="#about" data-i18n="nav.about">Biz haqimizda</a>
+        <a href="#directions" data-i18n="nav.directions">Yo‘nalishlar</a>
+        <a href="#news" data-i18n="nav.news">Yangiliklar</a>
+        <a href="#gallery" data-i18n="nav.gallery">Galereya</a>
+        <a href="#contact" data-i18n="nav.contact">Aloqa</a>
+      </nav>
+
+      <div class="header__actions">
+        <div class="lang" role="group" aria-label="Language">
+          <button data-lang="uz">UZ</button>
+          <button data-lang="ru">RU</button>
+          <button data-lang="en">EN</button>
+        </div>
+        <button class="icon-btn" id="themeToggle" aria-label="Theme">
+          <svg class="ico ico--sun"><use href="#i-sun"/></svg>
+          <svg class="ico ico--moon"><use href="#i-moon"/></svg>
+        </button>
+        <button class="icon-btn burger" id="burger" aria-label="Menu">
+          <svg class="ico"><use href="#i-menu"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- HERO -->
+    <section class="hero">
+      <div class="container hero__inner">
+        <div class="hero__text">
+          <span class="badge" data-i18n="hero.badge">Toshkent shahri, Yunusobod tumani</span>
+          <h1 data-i18n="hero.title">122-sonli umumiy o‘rta ta’lim maktabi</h1>
+          <p class="hero__motto" data-i18n="hero.motto">Katta orzular sari</p>
+          <p class="hero__lead" data-i18n="hero.lead">Bugungi mehnat — ertangi natija. Bilim, maqsad va kelajak sari birgalikda intilamiz.</p>
+          <div class="hero__buttons">
+            <a href="#about" class="btn btn--primary"><span data-i18n="hero.more">Batafsil</span><svg class="ico"><use href="#i-arrow"/></svg></a>
+            <a href="https://t.me/maaktaab_122" target="_blank" rel="noopener" class="btn btn--ghost"><svg class="ico"><use href="#i-telegram"/></svg>Telegram</a>
+          </div>
+        </div>
+        <div class="hero__media">
+          <img src="img/post6.jpg" alt="" class="hero__img">
+          <div class="hero__card">
+            <svg class="ico"><use href="#i-cap"/></svg>
+            <div>
+              <strong data-i18n="hero.cardTitle">1–11 sinflar</strong>
+              <span data-i18n="hero.cardText">Umumiy o‘rta ta’lim</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- VALUES -->
+    <section class="values">
+      <div class="container values__grid">
+        <div class="value"><svg class="ico"><use href="#i-book"/></svg><div><h3 data-i18n="val.1t">Bilim</h3><p data-i18n="val.1d">Sifatli ta’lim va chuqur bilim</p></div></div>
+        <div class="value"><svg class="ico"><use href="#i-target"/></svg><div><h3 data-i18n="val.2t">Maqsad</h3><p data-i18n="val.2d">Har bir o‘quvchi uchun aniq yo‘l</p></div></div>
+        <div class="value"><svg class="ico"><use href="#i-rocket"/></svg><div><h3 data-i18n="val.3t">Kelajak</h3><p data-i18n="val.3d">Ertangi kun uchun tayyorgarlik</p></div></div>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section class="section" id="about">
+      <div class="container about">
+        <div class="about__media">
+          <img src="img/post3.jpg" alt="">
+        </div>
+        <div class="about__text">
+          <span class="eyebrow" data-i18n="about.eyebrow">Biz haqimizda</span>
+          <h2 data-i18n="about.title">Bizning faxrimiz — 122-maktab</h2>
+          <p data-i18n="about.p1">122-maktab — nafaqat ta’lim maskani, balki go‘zallik, fayz-u tarovat va ezgu orzular mujassam bo‘lgan maskan! Har bir burchagida mehr, har bir qadamida bilim, har bir kunida yangi imkoniyatlar yashiringan.</p>
+          <p data-i18n="about.p2">Biz o‘quvchilarimizni vatanparvar, bilimli va o‘z kelajagiga ishonch bilan qaraydigan shaxslar etib tarbiyalaymiz.</p>
+          <ul class="checks">
+            <li><svg class="ico"><use href="#i-flag"/></svg><span data-i18n="about.c1">Vatanparvarlik tarbiyasi</span></li>
+            <li><svg class="ico"><use href="#i-award"/></svg><span data-i18n="about.c2">Xalqaro sertifikatlarga tayyorgarlik</span></li>
+            <li><svg class="ico"><use href="#i-heart"/></svg><span data-i18n="about.c3">Mehr va g‘amxo‘rlik muhiti</span></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- DIRECTIONS -->
+    <section class="section section--alt" id="directions">
+      <div class="container">
+        <div class="section__head">
+          <span class="eyebrow" data-i18n="dir.eyebrow">Maktab maslahatchisi</span>
+          <h2 data-i18n="dir.title">Asosiy yo‘nalishlar</h2>
+          <p data-i18n="dir.lead">Birgalikda izlanamiz, imkoniyatlarni kashf etamiz.</p>
+        </div>
+        <div class="cards">
+          <article class="card"><span class="card__num">01</span><svg class="ico"><use href="#i-compass"/></svg><h3 data-i18n="dir.1t">Kasbga yo‘naltirish</h3><p data-i18n="dir.1d">O‘quvchilarga qiziqishi va qobiliyatiga mos kasbni tanlashda yordam beramiz.</p></article>
+          <article class="card"><span class="card__num">02</span><svg class="ico"><use href="#i-star"/></svg><h3 data-i18n="dir.2t">Liderlik va ijodkorlik</h3><p data-i18n="dir.2d">Yetakchilik ko‘nikmalari va ijodiy fikrlashni rivojlantiramiz.</p></article>
+          <article class="card"><span class="card__num">03</span><svg class="ico"><use href="#i-bulb"/></svg><h3 data-i18n="dir.3t">Loyiha faoliyati</h3><p data-i18n="dir.3d">Amaliy loyihalar orqali bilimlarni hayotda qo‘llashni o‘rgatamiz.</p></article>
+          <article class="card"><span class="card__num">04</span><svg class="ico"><use href="#i-puzzle"/></svg><h3 data-i18n="dir.4t">To‘garaklar</h3><p data-i18n="dir.4d">Turli yo‘nalishdagi to‘garaklar har bir o‘quvchiga o‘z sohasini topish imkonini beradi.</p></article>
+          <article class="card"><span class="card__num">05</span><svg class="ico"><use href="#i-chat"/></svg><h3 data-i18n="dir.5t">Hamkorlik va muloqot</h3><p data-i18n="dir.5d">O‘quvchi, ota-ona va o‘qituvchi o‘rtasida ishonchli muloqot.</p></article>
+          <article class="card"><span class="card__num">06</span><svg class="ico"><use href="#i-users"/></svg><h3 data-i18n="dir.6t">Ijtimoiy faollik</h3><p data-i18n="dir.6d">Jamiyat hayotida faol ishtirok etishga undaymiz.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <!-- NEWS -->
+    <section class="section" id="news">
+      <div class="container">
+        <div class="section__head section__head--row">
+          <div>
+            <span class="eyebrow" data-i18n="news.eyebrow">Maktab hayoti</span>
+            <h2 data-i18n="news.title">So‘nggi yangiliklar</h2>
+          </div>
+          <a href="https://t.me/maaktaab_122" target="_blank" rel="noopener" class="link"><span data-i18n="news.all">Barcha yangiliklar</span><svg class="ico"><use href="#i-arrow"/></svg></a>
+        </div>
+        <div class="news">
+          <a class="news__item" href="https://t.me/maaktaab_122/3" target="_blank" rel="noopener">
+            <div class="news__img"><img src="img/post4.jpg" alt="" loading="lazy"></div>
+            <div class="news__body">
+              <span class="news__date"><svg class="ico"><use href="#i-calendar"/></svg>02.11.2026</span>
+              <h3 data-i18n="news.1t">«Kelajak soati» darsi — Davlat ramzlari</h3>
+              <p data-i18n="news.1d">1–11-sinflarda davlat bayrog‘i, gerbi va madhiyasiga bag‘ishlangan dars o‘tkazildi.</p>
+            </div>
+          </a>
+          <a class="news__item" href="https://t.me/maaktaab_122/6" target="_blank" rel="noopener">
+            <div class="news__img"><img src="img/post7.jpg" alt="" loading="lazy"></div>
+            <div class="news__body">
+              <span class="news__date"><svg class="ico"><use href="#i-calendar"/></svg>02.11.2026</span>
+              <h3 data-i18n="news.2t">Ertalabki saflanish</h3>
+              <p data-i18n="news.2d">5-sinf o‘quvchilari ishtirokida ertalabki saflanish bo‘lib o‘tdi, Davlat madhiyasi ijro etildi.</p>
+            </div>
+          </a>
+          <a class="news__item" href="https://t.me/maaktaab_122/9" target="_blank" rel="noopener">
+            <div class="news__img news__img--icon"><svg class="ico"><use href="#i-award"/></svg><span>B2</span></div>
+            <div class="news__body">
+              <span class="news__date"><svg class="ico"><use href="#i-calendar"/></svg>2026</span>
+              <h3 data-i18n="news.3t">Yuksak natija va munosib e’tirof!</h3>
+              <p data-i18n="news.3d">4-«B» sinf o‘quvchisi «Milliy Multilevel» imtihonida B2 darajasini qo‘lga kiritdi.</p>
+            </div>
+          </a>
+          <a class="news__item" href="https://t.me/maaktaab_122/10" target="_blank" rel="noopener">
+            <div class="news__img news__img--icon"><svg class="ico"><use href="#i-star"/></svg></div>
+            <div class="news__body">
+              <span class="news__date"><svg class="ico"><use href="#i-calendar"/></svg>2026</span>
+              <h3 data-i18n="news.4t">Yana bir yuksak natija!</h3>
+              <p data-i18n="news.4d">6-«V» sinf o‘quvchisi xalqaro sertifikatni qo‘lga kiritdi. Tabriklaymiz!</p>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- GALLERY -->
+    <section class="section section--alt" id="gallery">
+      <div class="container">
+        <div class="section__head">
+          <span class="eyebrow" data-i18n="gal.eyebrow">Galereya</span>
+          <h2 data-i18n="gal.title">Maktabimiz suratlarda</h2>
+        </div>
+        <div class="gallery">
+          <button class="gallery__item gallery__item--big"><img src="img/post6.jpg" alt="" loading="lazy"></button>
+          <button class="gallery__item"><img src="img/post3.jpg" alt="" loading="lazy"></button>
+          <button class="gallery__item"><img src="img/post4.jpg" alt="" loading="lazy"></button>
+          <button class="gallery__item"><img src="img/post7.jpg" alt="" loading="lazy"></button>
+          <button class="gallery__item"><img src="img/post8.jpg" alt="" loading="lazy"></button>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="section" id="contact">
+      <div class="container contact">
+        <div class="contact__info">
+          <span class="eyebrow" data-i18n="contact.eyebrow">Aloqa</span>
+          <h2 data-i18n="contact.title">Biz bilan bog‘laning</h2>
+          <p data-i18n="contact.lead">Savollaringiz bo‘lsa, ijtimoiy tarmoqlarimiz orqali yozing yoki maktabga tashrif buyuring.</p>
+          <ul class="contact__list">
+            <li><span class="contact__icon"><svg class="ico"><use href="#i-pin"/></svg></span><div><small data-i18n="contact.addrLabel">Manzil</small><strong data-i18n="contact.addr">Toshkent sh., Yunusobod tumani, 17-mavze</strong></div></li>
+            <li><a href="https://t.me/maaktaab_122" target="_blank" rel="noopener"><span class="contact__icon"><svg class="ico"><use href="#i-telegram"/></svg></span><div><small>Telegram</small><strong>@maaktaab_122</strong></div></a></li>
+            <li><a href="https://www.instagram.com/122__maktab" target="_blank" rel="noopener"><span class="contact__icon"><svg class="ico"><use href="#i-instagram"/></svg></span><div><small>Instagram</small><strong>@122__maktab</strong></div></a></li>
+          </ul>
+        </div>
+        <div class="contact__map">
+          <iframe title="Map" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+            src="https://maps.google.com/maps?q=122-maktab%20Yunusobod%2017%20Tashkent&z=15&output=embed"></iframe>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div class="brand">
+        <img src="img/logo.jpg" alt="" class="brand__logo">
+        <span class="brand__text"><strong>122-maktab</strong><small data-i18n="footer.motto">Bilim, maqsad, kelajak sari</small></span>
+      </div>
+      <div class="footer__social">
+        <a href="https://t.me/maaktaab_122" target="_blank" rel="noopener" aria-label="Telegram" class="icon-btn"><svg class="ico"><use href="#i-telegram"/></svg></a>
+        <a href="https://www.instagram.com/122__maktab" target="_blank" rel="noopener" aria-label="Instagram" class="icon-btn"><svg class="ico"><use href="#i-instagram"/></svg></a>
+      </div>
+      <p class="footer__copy">© <span id="year"></span> <span data-i18n="footer.copy">122-sonli umumiy o‘rta ta’lim maktabi</span></p>
+    </div>
+  </footer>
+
+  <div class="lightbox" id="lightbox" hidden>
+    <button class="icon-btn lightbox__close" id="lbClose" aria-label="Close"><svg class="ico"><use href="#i-close"/></svg></button>
+    <img src="" alt="" id="lbImg">
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
