@@ -1,6 +1,14 @@
 // Translations. Uzbek text is the default in index.html and is captured automatically.
 const T = {
   ru: {
+    'flag.eyebrow': '18 ноября — День принятия Государственного флага',
+    'flag.title': 'Наш флаг — наша гордость',
+    'flag.lead': '18 ноября 1991 года был принят Государственный флаг Республики Узбекистан. Коллектив школы № 122 от всей души поздравляет учеников, родителей и учителей с этой датой!',
+    'flag.blue': 'Голубой — чистое небо и живительная вода',
+    'flag.white': 'Белый — мир и чистота',
+    'flag.green': 'Зелёный — природа и новая жизнь',
+    'flag.red': 'Красные полосы — жизненная сила',
+    'flag.moon': 'Полумесяц и 12 звёзд — независимость и 12 месяцев года',
     'brand.sub': 'Юнусабадский район',
     'nav.about': 'О школе', 'nav.directions': 'Направления', 'nav.news': 'Новости', 'nav.gallery': 'Галерея', 'nav.contact': 'Контакты',
     'hero.badge': 'г. Ташкент, Юнусабадский район',
@@ -43,6 +51,14 @@ const T = {
     'footer.copy': 'Общеобразовательная школа № 122',
   },
   en: {
+    'flag.eyebrow': 'November 18 — State Flag Adoption Day',
+    'flag.title': 'Our flag — our pride',
+    'flag.lead': 'On November 18, 1991, the State Flag of the Republic of Uzbekistan was adopted. School No. 122 warmly congratulates all pupils, parents and teachers on this day!',
+    'flag.blue': 'Blue — the clear sky and life-giving water',
+    'flag.white': 'White — peace and purity',
+    'flag.green': 'Green — nature and new life',
+    'flag.red': 'Red stripes — the force of life',
+    'flag.moon': 'Crescent and 12 stars — independence and the 12 months of the year',
     'brand.sub': 'Yunusabad district',
     'nav.about': 'About', 'nav.directions': 'Programs', 'nav.news': 'News', 'nav.gallery': 'Gallery', 'nav.contact': 'Contact',
     'hero.badge': 'Tashkent, Yunusabad district',
@@ -92,6 +108,26 @@ const TITLES = {
   en: 'School No. 122 — Yunusabad district',
 };
 
+// Flag Day (Nov 18): section visible Nov 1-25 with a countdown
+const ruDays = n => (n % 10 === 1 && n % 100 !== 11) ? 'день'
+  : (n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 10 || n % 100 >= 20)) ? 'дня' : 'дней';
+const FLAG_TXT = {
+  uz: { left: n => `Bayramgacha ${n} kun qoldi`, done: 'Bayramingiz muborak!' },
+  ru: { left: n => `До праздника ${n === 1 ? 'остался' : 'осталось'} ${n} ${ruDays(n)}`, done: 'С праздником!' },
+  en: { left: n => `${n} day${n === 1 ? '' : 's'} until the holiday`, done: 'Happy Flag Day!' },
+};
+function updateFlagDay(lang) {
+  const sec = document.getElementById('flagday');
+  if (!sec) return;
+  const now = new Date();
+  const inWindow = now.getMonth() === 10 && now.getDate() <= 25;
+  sec.hidden = !inWindow;
+  if (!inWindow) return;
+  const t = FLAG_TXT[lang] || FLAG_TXT.uz;
+  const n = 18 - now.getDate();
+  document.getElementById('flagdayCount').textContent = n > 0 ? t.left(n) : t.done;
+}
+
 const nodes = document.querySelectorAll('[data-i18n]');
 T.uz = {};
 nodes.forEach(el => { T.uz[el.dataset.i18n] = el.textContent; });
@@ -106,6 +142,7 @@ function setLang(lang) {
   document.title = TITLES[lang];
   document.querySelectorAll('.lang button').forEach(b => b.classList.toggle('active', b.dataset.lang === lang));
   localStorage.setItem('lang', lang);
+  updateFlagDay(lang);
 }
 
 document.querySelectorAll('.lang button').forEach(b => b.addEventListener('click', () => setLang(b.dataset.lang)));
@@ -137,7 +174,7 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') lb.hidden = 
 const io = new IntersectionObserver(entries => entries.forEach(en => {
   if (en.isIntersecting) { en.target.classList.add('visible'); io.unobserve(en.target); }
 }), { threshold: 0.12 });
-document.querySelectorAll('.section__head, .about__media, .about__text, .card, .news__item, .gallery__item, .contact__info, .contact__map, .value')
+document.querySelectorAll('.flagday__media, .flagday__text, .section__head, .about__media, .about__text, .card, .news__item, .gallery__item, .contact__info, .contact__map, .value')
   .forEach(el => { el.classList.add('reveal'); io.observe(el); });
 
 document.getElementById('year').textContent = new Date().getFullYear();

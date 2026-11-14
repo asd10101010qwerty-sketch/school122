@@ -107,6 +107,49 @@
       </div>
     </section>
 
+    <!-- FLAG DAY (shown Nov 1-25, see script.js) -->
+    <section class="flagday" id="flagday" hidden>
+      <div class="container flagday__inner">
+        <div class="flagday__media">
+          <svg class="uzflag" viewBox="0 0 500 250" role="img" aria-label="O‘zbekiston Respublikasi Davlat bayrog‘i">
+            <defs><polygon id="uzStar" points="0,-1 .2245,-.309 .951,-.309 .3633,.118 .588,.809 0,.382 -.588,.809 -.3633,.118 -.951,-.309 -.2245,-.309" fill="#fff"/></defs>
+            <rect width="500" height="80" fill="#0099b5"/>
+            <rect y="80" width="500" height="5" fill="#ce1126"/>
+            <rect y="85" width="500" height="80" fill="#fff"/>
+            <rect y="165" width="500" height="5" fill="#ce1126"/>
+            <rect y="170" width="500" height="80" fill="#1eb53a"/>
+            <circle cx="70" cy="40" r="30" fill="#fff"/>
+            <circle cx="82" cy="40" r="27" fill="#0099b5"/>
+            <use href="#uzStar" transform="translate(180 20) scale(8)"/>
+            <use href="#uzStar" transform="translate(205 20) scale(8)"/>
+            <use href="#uzStar" transform="translate(230 20) scale(8)"/>
+            <use href="#uzStar" transform="translate(155 40) scale(8)"/>
+            <use href="#uzStar" transform="translate(180 40) scale(8)"/>
+            <use href="#uzStar" transform="translate(205 40) scale(8)"/>
+            <use href="#uzStar" transform="translate(230 40) scale(8)"/>
+            <use href="#uzStar" transform="translate(130 60) scale(8)"/>
+            <use href="#uzStar" transform="translate(155 60) scale(8)"/>
+            <use href="#uzStar" transform="translate(180 60) scale(8)"/>
+            <use href="#uzStar" transform="translate(205 60) scale(8)"/>
+            <use href="#uzStar" transform="translate(230 60) scale(8)"/>
+          </svg>
+          <p class="flagday__count" id="flagdayCount"></p>
+        </div>
+        <div class="flagday__text">
+          <span class="eyebrow" data-i18n="flag.eyebrow">18-noyabr — Davlat bayrog‘i qabul qilingan kun</span>
+          <h2 data-i18n="flag.title">Bayrog‘imiz — g‘ururimiz</h2>
+          <p data-i18n="flag.lead">1991-yil 18-noyabrda O‘zbekiston Respublikasi Davlat bayrog‘i qabul qilindi. 122-maktab jamoasi barcha o‘quvchilar, ota-onalar va ustozlarni ushbu sana bilan chin qalbdan tabriklaydi!</p>
+          <ul class="flagday__legend">
+            <li><i style="background:#0099b5"></i><span data-i18n="flag.blue">Ko‘k — musaffo osmon va obihayot</span></li>
+            <li><i style="background:#fff"></i><span data-i18n="flag.white">Oq — tinchlik va poklik</span></li>
+            <li><i style="background:#1eb53a"></i><span data-i18n="flag.green">Yashil — tabiat va yangi hayot</span></li>
+            <li><i style="background:#ce1126"></i><span data-i18n="flag.red">Qizil chiziqlar — hayotiy kuch-quvvat</span></li>
+            <li><svg class="ico"><use href="#i-moon"/></svg><span data-i18n="flag.moon">Yarim oy va 12 yulduz — mustaqillik va yilning 12 oyi</span></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
     <!-- VALUES -->
     <section class="values">
       <div class="container values__grid">

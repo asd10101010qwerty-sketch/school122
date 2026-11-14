@@ -252,3 +252,24 @@ h2 { font-family: "Playfair Display", Georgia, serif; font-size: clamp(1.8rem, 3
   .header__inner { gap: 10px; }
   .lang button { padding: 5px 7px; }
 }
+
+/* Flag Day */
+.flagday { padding: 72px 0; background: var(--bg-alt); position: relative; overflow: hidden; }
+.flagday::before { content: ""; position: absolute; inset: 0 0 auto; height: 6px;
+  background: linear-gradient(90deg, #0099b5 0 33.3%, #ce1126 33.3% 34.3%, #fff 34.3% 65.7%, #ce1126 65.7% 66.7%, #1eb53a 66.7%); }
+.flagday__inner { display: grid; grid-template-columns: 1fr 1.1fr; gap: 56px; align-items: center; }
+.flagday__media { text-align: center; }
+.uzflag { width: 100%; height: auto; display: block; border-radius: 10px; box-shadow: var(--shadow);
+  transform-origin: left center; animation: flagWave 6s ease-in-out infinite; }
+@keyframes flagWave { 0%, 100% { transform: perspective(900px) rotateY(0deg); }
+  50% { transform: perspective(900px) rotateY(8deg); } }
+@media (prefers-reduced-motion: reduce) { .uzflag { animation: none; } }
+.flagday__count { display: inline-block; margin-top: 24px; padding: 10px 22px; border-radius: 999px;
+  background: var(--primary); color: var(--on-primary); font-weight: 700; }
+.flagday__text h2 { margin-bottom: 14px; }
+.flagday__text > p { color: var(--muted); margin-bottom: 20px; }
+.flagday__legend { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; }
+.flagday__legend li { display: flex; align-items: center; gap: 12px; }
+.flagday__legend i { flex: none; width: 28px; height: 16px; border-radius: 4px; border: 1px solid var(--border); }
+.flagday__legend .ico { flex: none; width: 28px; height: 20px; color: #0099b5; }
+@media (max-width: 880px) { .flagday__inner { grid-template-columns: 1fr; gap: 32px; } }
