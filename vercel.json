@@ -1,3 +1,9 @@
 {
-  "functions": { "api/webhook.js": { "maxDuration": 300 } }
+  "functions": {
+    "api/webhook.js": { "maxDuration": 300 },
+    "api/greet.js": { "maxDuration": 300 }
+  },
+  "crons": [
+    { "path": "/api/greet", "schedule": "0 4 18 11 *" }
+  ]
 }
