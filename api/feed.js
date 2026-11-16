@@ -84,6 +84,7 @@ export default async function handler(req, res) {
     const title = decode((page.match(/<div class="tgme_channel_info_header_title"><span[^>]*>([^<]*)</) || [])[1] || "122-Maktab");
     const avatar = (page.match(/<i class="tgme_page_photo_image[^"]*"[^>]*><img src="([^"]+)"/) || [])[1] || null;
     res.setHeader("Cache-Control", "public, s-maxage=5, stale-while-revalidate=30");
+    res.setHeader("Access-Control-Allow-Origin", "*"); // so the page also works opened from disk
     res.status(200).json({ channel: CHANNEL, title, avatar, posts, hasOlder: /tme_messages_more[^>]*data-before=/.test(page) });
   } catch (e) {
     console.error("feed failed", e);

@@ -262,13 +262,106 @@ function feedStatus(ok) {
 
 function feedNearBottom(list) { return list.scrollHeight - list.scrollTop - list.clientHeight < 120; }
 
+// Where the feed comes from, tried in order:
+// 1) /api/feed on the same site (Vercel), 2) the deployed site's API (works when opened from disk),
+// 3) the public channel page via a CORS proxy, parsed right here in the browser.
+var FEED_SITE_API = 'https://school122-122.vercel.app/api/feed';
+var FEED_PROXY = u => 'https://api.allorigins.win/raw?url=' + encodeURIComponent(u);
+var feedSrc = null; // the source that worked last time
+
+var TG = (function () {
+  const CHANNEL = 'maaktaab_122';
+  const HIDE_MEDIA = new Set([9, 10]); // certificate photos with pupils' personal data
+  const decode = s => s
+    .replace(/&#(\d+);/g, (_, n) => String.fromCodePoint(+n))
+    .replace(/&#x([0-9a-f]+);/gi, (_, n) => String.fromCodePoint(parseInt(n, 16)))
+    .replace(/&quot;/g, '"').replace(/&#039;|&apos;/g, "'")
+    .replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&');
+  const esc = s => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  const EMOJI = /(\p{Extended_Pictographic}|\p{Regional_Indicator}|[\u{1F3FB}-\u{1F3FF}️‍⃣])/gu;
+
+  function cleanText(html) {
+    html = html.replace(/<i class="emoji"[^>]*>[\s\S]*?<\/i>/g, '').replace(/<tg-emoji[^>]*>[\s\S]*?<\/tg-emoji>/g, '');
+    let out = '';
+    const re = /<(\/?)([a-z0-9-]+)([^>]*)>|([^<]+)/gi;
+    let m;
+    while ((m = re.exec(html))) {
+      if (m[4] !== undefined) { out += esc(decode(m[4]).replace(EMOJI, '')); continue; }
+      const close = m[1], tag = m[2].toLowerCase(), attrs = m[3];
+      if (tag === 'br') { out += '<br>'; continue; }
+      if (['b', 'strong', 'i', 'em', 'u', 's', 'code', 'pre', 'blockquote'].includes(tag)) { out += `<${close}${tag}>`; continue; }
+      if (tag === 'a') {
+        if (close) { out += '</a>'; continue; }
+        const href = decode((attrs.match(/href="([^"]*)"/) || [])[1] || '');
+        out += /^https?:\/\//i.test(href) ? `<a href="${esc(href)}" target="_blank" rel="noopener">` : '<a>';
+      }
+    }
+    return out.replace(/<br>[ \t]+/g, '<br>').replace(/^(\s|<br>)+|(\s|<br>)+$/g, '').replace(/(<br>\s*){3,}/g, '<br><br>');
+  }
+
+  function parse(page) {
+    const posts = [];
+    for (const block of page.split('<div class="tgme_widget_message_wrap').slice(1)) {
+      const id = +((block.match(/data-post="[^/"]+\/(\d+)"/) || [])[1] || 0);
+      if (!id || /class="tgme_widget_message[^"]*service_message/.test(block)) continue;
+      const media = [];
+      const mediaRe = /<a class="tgme_widget_message_(photo_wrap|video_player)[\s\S]*?(?=<a class="tgme_widget_message_(?:photo_wrap|video_player)|<div class="tgme_widget_message_(?:text|footer|link_preview)|$)/g;
+      let mm;
+      while ((mm = mediaRe.exec(block))) {
+        const chunk = mm[0];
+        const bg = (chunk.match(/background-image:url\('([^']+)'\)/) || [])[1];
+        if (mm[1] === 'photo_wrap') { if (bg) media.push({ type: 'photo', src: bg }); }
+        else {
+          const src = (chunk.match(/<video src="([^"]+)"/) || [])[1];
+          media.push({ type: 'video', src: src ? decode(src) : null, thumb: bg || null,
+            duration: (chunk.match(/message_video_duration[^>]*>([^<]+)</) || [])[1] || null });
+        }
+      }
+      const textHtml = (block.match(/<div class="tgme_widget_message_text[^"]*"[^>]*>([\s\S]*?)<\/div>/) || [])[1];
+      const text = textHtml ? cleanText(textHtml) : '';
+      if (!text && !media.length) continue;
+      posts.push({
+        id, url: `https://t.me/${CHANNEL}/${id}`,
+        date: (block.match(/<time datetime="([^"]+)"/) || [])[1] || null,
+        views: (block.match(/tgme_widget_message_views">([^<]+)</) || [])[1] || null,
+        text, media: HIDE_MEDIA.has(id) ? [] : media,
+      });
+    }
+    return {
+      channel: CHANNEL,
+      title: decode((page.match(/<div class="tgme_channel_info_header_title"><span[^>]*>([^<]*)</) || [])[1] || '122-Maktab'),
+      avatar: (page.match(/<i class="tgme_page_photo_image[^"]*"[^>]*><img src="([^"]+)"/) || [])[1] || null,
+      posts: posts.sort((a, b) => a.id - b.id),
+      hasOlder: /tme_messages_more[^>]*data-before=/.test(page),
+    };
+  }
+  return { CHANNEL, parse };
+})();
+
+async function feedFetch(before) {
+  const q = before ? '?before=' + before : '';
+  const sources = [];
+  if (/^https?:$/.test(location.protocol)) sources.push({ name: 'local', get: () => fetch('/api/feed' + q, { cache: 'no-store' }).then(r => r.ok ? r.json() : Promise.reject(r.status)) });
+  if (location.origin !== new URL(FEED_SITE_API).origin) sources.push({ name: 'site', get: () => fetch(FEED_SITE_API + q, { cache: 'no-store' }).then(r => r.ok ? r.json() : Promise.reject(r.status)) });
+  sources.push({ name: 'proxy', get: () => fetch(FEED_PROXY(`https://t.me/s/${TG.CHANNEL}?${before ? 'before=' + before + '&' : ''}_=${Date.now()}`)).then(r => r.ok ? r.text() : Promise.reject(r.status)).then(TG.parse) });
+  // try the source that worked last time first
+  if (feedSrc) sources.sort((a, b) => (b.name === feedSrc) - (a.name === feedSrc));
+  for (const s of sources) {
+    try {
+      const data = await s.get();
+      if (!data || !Array.isArray(data.posts)) throw new Error('bad data');
+      feedSrc = s.name;
+      return data;
+    } catch (e) { /* next source */ }
+  }
+  throw new Error('feed unavailable');
+}
+
 async function feedLoad() {
   const list = document.getElementById('feedList');
   const stick = !feed.loaded || feedNearBottom(list);
   try {
-    const r = await fetch('/api/feed', { cache: 'no-store' });
-    if (!r.ok) throw new Error(r.status);
-    const data = await r.json();
+    const data = await feedFetch();
     if (data.avatar) document.getElementById('feedAvatar').src = data.avatar;
     if (data.title) document.getElementById('feedTitle').textContent = data.title;
     // drop posts that were deleted from the newest page
@@ -300,9 +393,7 @@ async function feedOlder() {
   if (!feed.minId) return;
   btn.disabled = true;
   try {
-    const r = await fetch('/api/feed?before=' + feed.minId);
-    if (!r.ok) throw new Error(r.status);
-    const data = await r.json();
+    const data = await feedFetch(feed.minId);
     const fromBottom = list.scrollHeight - list.scrollTop;
     feedUpsert(data.posts);
     if (data.posts.length) feed.minId = data.posts[0].id;
