@@ -266,7 +266,12 @@ function feedNearBottom(list) { return list.scrollHeight - list.scrollTop - list
 // 1) /api/feed on the same site (Vercel), 2) the deployed site's API (works when opened from disk),
 // 3) the public channel page via a CORS proxy, parsed right here in the browser.
 var FEED_SITE_API = 'https://school122-122.vercel.app/api/feed';
-var FEED_PROXY = u => 'https://api.allorigins.win/raw?url=' + encodeURIComponent(u);
+// Several public CORS proxies, asked in parallel; the first good answer wins.
+var FEED_PROXIES = [
+  u => 'https://api.cors.lol/?url=' + encodeURIComponent(u),
+  u => 'https://api.allorigins.win/raw?url=' + encodeURIComponent(u),
+  u => 'https://api.codetabs.com/v1/proxy/?quest=' + encodeURIComponent(u),
+];
 var feedSrc = null; // the source that worked last time
 
 var TG = (function () {
@@ -338,18 +343,30 @@ var TG = (function () {
   return { CHANNEL, parse };
 })();
 
+function feedGet(url, ms, type) {
+  const ctl = new AbortController();
+  const t = setTimeout(() => ctl.abort(), ms);
+  return fetch(url, { cache: 'no-store', signal: ctl.signal })
+    .then(r => r.ok ? (type === 'json' ? r.json() : r.text()) : Promise.reject(r.status))
+    .finally(() => clearTimeout(t));
+}
+function feedCheck(data) {
+  if (!data || !Array.isArray(data.posts) || (!data.posts.length && data.hasOlder)) throw new Error('bad data');
+  return data;
+}
+
 async function feedFetch(before) {
   const q = before ? '?before=' + before : '';
+  const tg = `https://t.me/s/${TG.CHANNEL}?${before ? 'before=' + before + '&' : ''}_=${Date.now()}`;
   const sources = [];
-  if (/^https?:$/.test(location.protocol)) sources.push({ name: 'local', get: () => fetch('/api/feed' + q, { cache: 'no-store' }).then(r => r.ok ? r.json() : Promise.reject(r.status)) });
-  if (location.origin !== new URL(FEED_SITE_API).origin) sources.push({ name: 'site', get: () => fetch(FEED_SITE_API + q, { cache: 'no-store' }).then(r => r.ok ? r.json() : Promise.reject(r.status)) });
-  sources.push({ name: 'proxy', get: () => fetch(FEED_PROXY(`https://t.me/s/${TG.CHANNEL}?${before ? 'before=' + before + '&' : ''}_=${Date.now()}`)).then(r => r.ok ? r.text() : Promise.reject(r.status)).then(TG.parse) });
-  // try the source that worked last time first
-  if (feedSrc) sources.sort((a, b) => (b.name === feedSrc) - (a.name === feedSrc));
+  if (/^https?:$/.test(location.protocol)) sources.push({ name: 'local', get: () => feedGet('/api/feed' + q, 8000, 'json') });
+  if (location.origin !== new URL(FEED_SITE_API).origin) sources.push({ name: 'site', get: () => feedGet(FEED_SITE_API + q, 6000, 'json') });
+  sources.push({ name: 'proxy', get: () => Promise.any(FEED_PROXIES.map(px =>
+    feedGet(px(tg), 7000, 'text').then(html => feedCheck(TG.parse(html))))) });
+  if (feedSrc) sources.sort((a, b) => (b.name === feedSrc) - (a.name === feedSrc)); // last good source first
   for (const s of sources) {
     try {
-      const data = await s.get();
-      if (!data || !Array.isArray(data.posts)) throw new Error('bad data');
+      const data = feedCheck(await s.get());
       feedSrc = s.name;
       return data;
     } catch (e) { /* next source */ }
@@ -372,6 +389,7 @@ async function feedLoad() {
       });
     }
     const added = feedUpsert(data.posts);
+    try { localStorage.setItem('feedCache', JSON.stringify(data)); } catch (e) { /* storage unavailable */ }
     if (!feed.loaded) {
       feed.hasOlder = data.hasOlder;
       feed.minId = data.posts.length ? data.posts[0].id : 0;
@@ -417,7 +435,9 @@ function feedSetLang(lang) {
 
 function feedSchedule() {
   clearTimeout(feed.timer);
-  if (!document.hidden) feed.timer = setTimeout(() => feedLoad().then(feedSchedule), FEED_POLL);
+  // our own API is cached at the edge and can be polled often; public proxies get rate-limited
+  const wait = feedSrc === 'proxy' || !feedSrc ? 60000 : FEED_POLL;
+  if (!document.hidden) feed.timer = setTimeout(() => feedLoad().then(feedSchedule), wait);
 }
 
 (function feedInit() {
@@ -430,6 +450,18 @@ function feedSchedule() {
   document.addEventListener('visibilitychange', () => {
     if (document.hidden) clearTimeout(feed.timer); else feedLoad().then(feedSchedule);
   });
+  // show the last loaded feed instantly, then refresh it live
+  try {
+    const cached = JSON.parse(localStorage.getItem('feedCache') || 'null');
+    if (cached && Array.isArray(cached.posts) && cached.posts.length) {
+      feedUpsert(cached.posts);
+      feed.minId = cached.posts[0].id;
+      feed.hasOlder = !!cached.hasOlder;
+      document.getElementById('feedOlder').hidden = !feed.hasOlder;
+      document.getElementById('feedState').hidden = true;
+      list.scrollTop = list.scrollHeight;
+    }
+  } catch (e) { /* no cache */ }
   feedLoad().then(feedSchedule);
 })();
 
